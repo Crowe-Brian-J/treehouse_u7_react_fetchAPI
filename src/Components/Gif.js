@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-const Gif = props => (
+const Gif = ({ url }) => (
   <li className="gif-wrap">
-    <img alt=""/>
+    <img src={url} alt="" />
   </li>
-);
+)
 
-export default Gif;
+export default Gif
