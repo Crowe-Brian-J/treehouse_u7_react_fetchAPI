@@ -9,8 +9,10 @@ const apiKey = process.env.REACT_APP_MY_API_KEY
 function App() {
   const [gifs, setGifs] = useState([])
   const [query, setQuery] = useState('candy')
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    setLoading(true)
     let activeFetch = true
     axios
       // for search replace trending with search and vice versa
@@ -21,6 +23,7 @@ function App() {
       .then((responseData) => {
         if (activeFetch) {
           setGifs(responseData.data.data)
+          setLoading(false)
         }
       })
       .catch((err) => {
@@ -44,7 +47,7 @@ function App() {
         </div>
       </div>
       <div className="main-content">
-        <GifList data={gifs} />
+        {loading ? <p>Loading...</p> : <GifList data={gifs} />}
       </div>
     </div>
   )
