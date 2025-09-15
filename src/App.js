@@ -1,8 +1,21 @@
-import React from "react";
-import SearchForm from './Components/SearchForm';
-import GifList from "./Components/GifList";
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import SearchForm from './Components/SearchForm'
+import GifList from './Components/GifList'
+
+// Access API Key
+const apiKey = process.env.REACT_APP_MY_API_KEY
 
 function App() {
+  const [gifs, setGifs] = useState([])
+  useEffect(() => {
+    axios
+      .get(`https://api.giphy.com/v1/gifs/trending?api_key=${apiKey}&limit=24`)
+      // update gifState
+      .then((responseData) => setGifs(responseData.data.data))
+      .catch((err) => console.log('Error fetching and parsing data:', err))
+  }, [])
+
   return (
     <div>
       <div className="main-header">
@@ -15,7 +28,7 @@ function App() {
         <GifList />
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
